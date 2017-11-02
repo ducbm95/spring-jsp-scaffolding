@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody>
-            <c:forEach items="${products}" var="product">
+            <c:forEach items="${products.content}" var="product">
               <tr>
                 <td>${product.name}</td>
                 <td>${product.price}</td>
@@ -44,6 +44,30 @@
              </c:forEach>
           </tbody>
         </table>
+    
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li>
+              <c:if test="${products.number >= 1}">
+              <a href="/products?page=${products.number - 1}"
+                  aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+              </c:if>
+            </li>
+            <c:forEach var="i" begin="1" end="${products.totalPages}">
+              <li><a href="/products?page=${i-1}">${i}</a></li>
+            </c:forEach>
+            <li>
+              <c:if test="${products.totalPages - products.number > 1}">
+              <a href="/products?page=${products.number + 1}"
+                  aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+              </c:if>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </jsp:body>

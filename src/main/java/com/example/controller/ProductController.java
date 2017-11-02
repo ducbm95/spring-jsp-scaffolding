@@ -6,6 +6,9 @@ import javax.validation.Valid;
 
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,8 +37,8 @@ public class ProductController {
 	private ProductService productService;
 
 	@GetMapping
-	public String index(Model model) {
-		List<Product> all = productService.findAll();
+	public String index(Model model, @PageableDefault(page = 0, size = 10, sort = { "id" }) Pageable pageable) {
+		Page<Product> all = productService.findAll(pageable);
 		model.addAttribute("products", all);
 		return "product/index";
 	}
